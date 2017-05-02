@@ -1,0 +1,54 @@
+﻿@model UserAwards.Models.PersonModel
+
+@{
+	ViewBag.Title = "Delete";
+	Layout = "~/Views/Shared/_LayoutPerson.cshtml";
+}
+
+<h2>Delete</h2>
+
+@if (Model != null)
+{
+	<h3>Are you sure you want to delete this?</h3>
+	<fieldset>
+		<legend>PersonModel</legend>
+
+		<div class="display-label">
+			@Html.DisplayNameFor(model => model.Name)
+		</div>
+		<div class="display-field">
+			@Html.DisplayFor(model => model.Name)
+		</div>
+
+		<div class="display-label">
+			@Html.DisplayNameFor(model => model.Birthdate)
+		</div>
+		<div class="display-field">
+			@Html.DisplayFor(model => model.Birthdate)
+		</div>
+
+		<div class="display-label">
+			@Html.DisplayNameFor(model => model.Age)
+		</div>
+		<div class="display-field">
+			@Html.DisplayFor(model => model.Age)
+		</div>
+	</fieldset>
+}
+else
+{
+	<div class="editor-label">
+		@Html.Label("Data not found")
+	</div>
+}
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+}
+
+<p>
+	<input type="submit" value="Delete" /> |
+	@Html.ActionLink("Back to List", "Index")
+</p>
+}
