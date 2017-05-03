@@ -79,3 +79,4 @@ D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\Microsoft.Owin.Security.T
 D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\obj\Debug\UserAwards.dll
 D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\obj\Debug\UserAwards.pdb
+D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\obj\Debug\UserAwards.csprojResolveAssemblyReference.cache

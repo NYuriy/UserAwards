@@ -39,7 +39,7 @@ namespace UserAwards.Controllers
 
 		public ActionResult Create()
 		{
-			return View();
+			return View("Create");
 		}
 
 		public FileStreamResult GetListPerson()

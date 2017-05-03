@@ -15,22 +15,5 @@
 }
 
 <div>
-	@if (ViewContext.RouteData.Values["controller"].ToString().ToLower() != "Person")
-	{
-		<ol class="breadcrumb">
-			<li>
-				@Html.ActionLink("Person Award", "Index", "PersonLinkAward")
-			</li>
-			<li>
-				@Html.ActionLink("Index", "Index", ViewContext.RouteData.Values["controller"].ToString())
-			</li>
-			@if (!string.IsNullOrEmpty(ViewContext.RouteData.Values["action"].ToString()) && ViewContext.RouteData.Values["action"].ToString() != "Index")
-			{
-				<li class="active">
-					@Html.ActionLink(ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["action"].ToString())
-				</li>
-			}
-		</ol>
-	}
 	@RenderBody()
 </div>
