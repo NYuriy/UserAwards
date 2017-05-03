@@ -27,17 +27,11 @@ namespace UserAwards.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public ActionResult ModalAction(Guid id)
+		public ActionResult ModalAction(string id)
 		{
-			return PartialView("ModalContent", AwardHelper.GetAwardById(id));
+			return PartialView("_ModalContentPartial", AwardHelper.GetAwardById(Guid.Parse(id)));
 		}
 
-		[HttpPost]
-		public ActionResult Lyubomir()
-		{
-			return RedirectToAction("Index");
-		}
-		
 		public ActionResult NewAttachAward()
 		{
 			ViewBag.PersonModelListItem = PersonLinkAwardHelper.PersonModelListItem();
