@@ -1,0 +1,44 @@
+﻿@using UserAwards.Models
+@model List<UserManageModel>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("SaveDataUser", "UserManage"))
+{
+	<fieldset>
+		<table class="table">
+			<tr>
+				<th>
+					UserName
+				</th>
+				<th>
+					IsAdmin
+				</th>
+				<th></th>
+			</tr>
+
+
+			@for (var i = 0; i < Model.Count; i++)
+			{
+				<tr>
+					<td>
+						@Html.HiddenFor(m => m[i].UserId)
+						@Html.DisplayFor(m => m[i].UserName)
+					</td>
+					<td>
+						@Html.EditorFor(m => m[i].IsAdmin)
+					</td>
+					<td>
+						<a>Delete</a>
+					</td>
+				</tr>
+			}
+		</table>
+		<p>
+			<input type="submit" value="Save"/>
+		</p>
+	</fieldset>
+}
