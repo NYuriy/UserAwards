@@ -9,6 +9,10 @@ namespace UserAwards.Models
 	/// </summary>
 	public class AwardModel
 	{
+		public AwardModel()
+		{
+			ImageData = null;
+		}
 		[HiddenInput(DisplayValue = false)]
 		public Guid Id { get; set; }
 

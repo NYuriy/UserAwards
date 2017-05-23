@@ -7,11 +7,15 @@ namespace UserAwards.Models
 	public class UsersContext : DbContext
 	{
 		public UsersContext()
-			: base("DefaultConnection")
+			: base("UserAwardConnection")
 		{
 		}
 
 		public DbSet<UserProfile> UserProfiles { get; set; }
+
+		public System.Data.Entity.DbSet<UserAwards.Models.UserModel> UserModels { get; set; }
+
+		public System.Data.Entity.DbSet<UserAwards.Models.PersonModel> PersonModels { get; set; }
 	}
 
 	[Table("UserProfile")]

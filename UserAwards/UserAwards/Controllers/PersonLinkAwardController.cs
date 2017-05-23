@@ -8,7 +8,8 @@ namespace UserAwards.Controllers
 {
 	public class PersonLinkAwardController : Controller
 	{
-		
+
+		[Authorize(Roles = "Admin")]
 		public ActionResult Index()
 		{
 			return View(PersonLinkAwardHelper.GetPersonLinkAwardList());

@@ -64,6 +64,7 @@ namespace UserAwards.Models.Helpers
 		/// <param name="model">The AwardModel.</param>
 		public static void CreateEntity(AwardModel model)
 		{
+			model.Id = Guid.NewGuid();
 			AwardModelList.Add(model);
 		}
 

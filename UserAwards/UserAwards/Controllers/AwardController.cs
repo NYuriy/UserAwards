@@ -27,7 +27,6 @@ namespace UserAwards.Controllers
 			return View("Index", res);
 		}
 
-
 		[Route("award/{userId:guid}")]
 		public ActionResult AwawrdById(Guid userId)
 		{
@@ -52,6 +51,7 @@ namespace UserAwards.Controllers
 			return View("Create");
 		}
 
+		[Authorize(Roles = "Admin, User")]
 		public ActionResult Index()
 		{
 			return View(AwardHelper.AwardModelList);

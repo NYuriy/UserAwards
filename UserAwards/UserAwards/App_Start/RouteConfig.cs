@@ -59,7 +59,7 @@ namespace UserAwards
 			routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",
-				defaults: new { controller = "PersonLinkAward", action = "Index", id = UrlParameter.Optional }
+				defaults: new { controller = "Person", action = "Index", id = UrlParameter.Optional }
 			);
 			
 

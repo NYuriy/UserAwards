@@ -195,10 +195,13 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AwardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\PersonLinkAwardController.cs" />
+    <Compile Include="Controllers\UserManageController.cs" />
     <Compile Include="Filters\ActionFilter.cs" />
     <Compile Include="Filters\ExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -206,6 +209,9 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AppDbInitializer.cs" />
+    <Compile Include="Models\ApplicationRole.cs" />
+    <Compile Include="Models\ApplicationRoleManager.cs" />
     <Compile Include="Models\AwardModel.cs" />
     <Compile Include="Models\Entity\Award.cs" />
     <Compile Include="Models\Entity\Person.cs" />
@@ -218,10 +224,16 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PersonLinkAwardModel.cs" />
     <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\UserManageModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\UserAwardDB.mdf" />
+    <Content Include="App_Data\UserAwardDB_log.ldf">
+      <DependentUpon>UserAwardDB.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -256,7 +268,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -295,9 +309,21 @@
     <Content Include="Views\Shared\_LayoutAward.cshtml" />
     <Content Include="Views\Shared\_LayoutPerson.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\UserManage\Index.cshtml" />
+    <Content Include="Views\Person\_IndexListPartial.cshtml" />
+    <Content Include="Views\Person\_CreateNewPersonPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Views\RoleAdmin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

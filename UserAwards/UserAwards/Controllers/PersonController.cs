@@ -14,7 +14,12 @@ namespace UserAwards.Controllers
 		
 		public ActionResult Index()
 		{
-			return View(PersonHelper.PersonModelList);
+			var model = PersonHelper.PersonModelList;
+			if (Request.IsAjaxRequest())
+			{
+				return PartialView("_IndexListPartial", model);
+			}
+			return View(model);
 		}
 
 		public ActionResult IndexContaintsName(string userName)
@@ -69,11 +74,29 @@ namespace UserAwards.Controllers
 			return File(fs, "text/csv");
 		}
 
+	
+		public ActionResult SaveNewPerson(PersonModel personModel)
+		{
+			Create(personModel);
+			var model = PersonHelper.PersonModelList;
+			return PartialView("_IndexListPartial", model);
+		}
+
+		[HttpPost]
+		public ActionResult TemplateCreateNewPersonPartial()
+		{
+			return PartialView("_CreateNewPersonPartial");
+		}
+
 		[HttpPost]
 		public ActionResult Create(PersonModel personModel, HttpPostedFileBase image = null)
 		{
 			if (!ModelState.IsValid)
 			{
+				if (Request.IsAjaxRequest())
+				{
+					return PartialView("_CreateNewPersonPartial");
+				}
 				return View();
 			}
 
@@ -144,6 +167,14 @@ namespace UserAwards.Controllers
 		public ActionResult DeleteByUserId(string id)
 		{
 			return View("Delete", PersonHelper.GetPersonModelEntity(Guid.Parse(id)));
+		}
+
+		[HttpPost]
+		public ActionResult DeletePerson(Guid id)
+		{
+			PersonHelper.DeleteEntity(id);
+			var model = PersonHelper.PersonModelList;
+			return PartialView("_IndexListPartial", model);
 		}
 
 		[HttpPost]
