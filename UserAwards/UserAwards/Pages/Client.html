@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+
+	<script src="/Scripts/jquery-1.9.0.js"></script>
+	<script src="/Scripts/jquery-2.0.0.js"></script>
+	<script src="/Scripts/jquery.validate.js"></script>
+	<script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+
+	<script src="/Scripts/jquery.validate.js"></script>
+	<script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+
+	<script src="/Scripts/modernizr-2.6.2.js"></script>
+
+	<script src="/Scripts/bootstrap.js"></script>
+	<script src="/Scripts/respond.js"></script>
+
+	<link href="/Content/site.css" rel="stylesheet" />
+	<link href="/Content/bootstrap-theme.css" rel="stylesheet" />
+	<link href="/Content/bootstrap.css" rel="stylesheet" />
+
+
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			// GetAllPersons();
+
+			$("#getPersons").click(function (event) {
+				event.preventDefault();
+				GetPersons();
+			});
+
+			$("#getPersonsByLetter").click(function (event) {
+				event.preventDefault();
+				GetPersonsByLetter();
+			});
+
+			$("#getPersonsByName").click(function (event) {
+				event.preventDefault();
+				GetPersonsByName();
+			});
+
+			$("#getPersonByName").click(function (event) {
+				event.preventDefault();
+				GetPersonByName();
+			});
+
+			$("#getPersonById").click(function (event) {
+				event.preventDefault();
+				GetPersonById();
+			});
+
+			$("#editPerson").click(function (event) {
+				event.preventDefault();
+				EditPerson();
+			});
+
+			$("#addPerson").click(function (event) {
+				event.preventDefault();
+				AddPerson();
+			});
+
+		});
+
+		function GetPersons() {
+			$.ajax({
+				url: '/api/users',
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					WriteResponseTable(data);
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function GetPersonsByLetter() {
+			var letter = $('#inputLetter').val();
+			$.ajax({
+				url: '/api/users/' + letter,
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					WriteResponseTable(data);
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function GetPersonsByName() {
+			var personName = $('#inputPersonName').val();
+			$.ajax({
+				url: '/api/users/' + personName,
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					WriteResponseTable(data);
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function GetPersonByName() {
+			var personName = $('#inputPersonName2').val();
+			$.ajax({
+				url: '/api/user/' + personName,
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					WriteResponseDetails(data);
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function GetPersonById() {
+			var personId = $('#inputPersonId').val();
+			$.ajax({
+				url: '/api/user/' + personId,
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					WriteResponseDetails(data);
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function AddPerson() {
+
+			var person = {
+				Name: $('#addName').val(),
+				Birthdate: $('#addYear').val()
+			};
+
+			$.ajax({
+				url: '/api/PersonApi/',
+				type: 'POST',
+				data: JSON.stringify(person),
+				contentType: "application/json;charset=utf-8",
+				success: function () {
+					GetPersons();
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function DeletePerson(id) {
+
+			$.ajax({
+				url: '/api/PersonApi/' + id,
+				type: 'DELETE',
+				contentType: "application/json;charset=utf-8",
+				success: function () {
+					GetPersons();
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function EditPerson() {
+			var id = $('#editId').val();
+
+			var person = {
+				Id: $('#editId').val(),
+				Name: $('#editName').val(),
+				Birthdate: $('#editYear').val()
+			};
+			$.ajax({
+				url: '/api/PersonApi/' + id,
+				type: 'PUT',
+				data: JSON.stringify(person),
+				contentType: "application/json;charset=utf-8",
+				success: function () {
+					GetPersons();
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function WriteResponseTable(persons) {
+			var strResult = "<table><th>ID</th><th>Name</th><th>Age</th>";
+			$.each(persons, function (index, person) {
+				strResult += "<tr><td>" + person.Id + "</td><td> " + person.Name + "</td><td>" +
+					person.Age + "</td><td><a id='editItem' data-item='" + person.Id + "' onclick='EditItem(this);' >Edit</a></td>" +
+					"<td><a id='delItem' data-item='" + person.Id + "' onclick='DeleteItem(this);' >Delete</a></td></tr>";
+			});
+			strResult += "</table>";
+			$("#tableBlock").html(strResult);
+
+		}
+		function WriteResponseDetails(persons) {
+			var strResult = "<table>";
+			$.each(persons, function (index, person) {
+				strResult += "<tr><td>Id = " + person.Id + "</td></tr>" +
+					"<tr><td> Name = " + person.Name + "</td></tr>" +
+					"<tr><td> Age = " + person.Age + "</td></tr>";
+			});
+			strResult += "</table>";
+			$("#detailBlock").html(strResult);
+
+		}
+
+		function DeleteItem(el) {
+
+			var id = $(el).attr('data-item');
+			DeletePerson(id);
+		}
+
+		function EditItem(el) {
+
+			var id = $(el).attr('data-item');
+			GetPerson(id);
+		}
+
+		function ShowPerson(person) {
+			if (person != null) {
+				$("#editId").val(person.Id);
+				$("#editName").val(person.Name);
+				$("#editYear").val(person.Birthdate);
+			}
+			else {
+				alert("Not found!");
+			}
+		}
+
+		function GetPerson(id) {
+			$.ajax({
+				url: '/api/user/' + id,
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					ShowPerson(data[0]);
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+	</script>
+
+
+
+	<div id="tableBlock"></div>
+
+	<div>
+		<table>
+			<tr>
+				<td><button id="getPersons">GetPersons</button></td>
+			</tr>
+			<tr>
+				<td>Input letter:</td>
+				<td><input id="inputLetter" text="" /></td>
+				<td><button id="getPersonsByLetter">GetPersonsByLetter</button></td>
+			</tr>
+			<tr>
+				<td>Input person Name:</td>
+				<td><input id="inputPersonName" text="" /></td>
+				<td><button id="getPersonsByName">GetPersonsByName</button></td>
+			</tr>
+			<tr>
+				<td>Input person Name:</td>
+				<td><input id="inputPersonName2" text="" /></td>
+				<td><button id="getPersonByName">GetPersonByName</button></td>
+			</tr>
+			<tr>
+				<td>Input person Id:</td>
+				<td><input id="inputPersonId" text="" /></td>
+				<td><button id="getPersonById">GetPersonById</button></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="detailBlock"></div>
+
+
+<div id="createBlock">
+	<p><b>Add person</b></p>
+	<table>
+		<tr><td><label>Name: </label></td><td><input type="text" id="addName" /></td></tr>
+		<tr><td><label>Birthdate: </label></td><td><input type="text" id="addYear" /></td></tr>
+	</table>
+	<button id="addPerson">Save</button>
+
+</div>
+	
+	<div id="editBlock">
+		<p><b>Edit person</b></p>
+		<table>
+			<tr><td><input type="hidden" id="editId" /></td><td></td></tr>
+			<tr><td><label>Name: </label></td><td><input type="text" id="editName" /></td></tr>
+			<tr><td><label>Birthdate: </label></td><td><input type="text" id="editYear" /></td></tr>
+		</table>
+		<button id="editPerson">Save</button>
+	</div>
+
+</body>
+</html>

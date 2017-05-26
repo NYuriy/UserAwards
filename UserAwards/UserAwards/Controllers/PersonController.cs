@@ -15,7 +15,7 @@ namespace UserAwards.Controllers
 		public ActionResult Index()
 		{
 			var model = PersonHelper.PersonModelList;
-			if (Request.IsAjaxRequest())
+			if (Request != null && Request.IsAjaxRequest())
 			{
 				return PartialView("_IndexListPartial", model);
 			}
