@@ -8,7 +8,7 @@
 <h2>Create</h2>
 
 <div id="createPersonPartial">
-	@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "SaveFormId" }))
+	@using (Html.BeginForm("Create", "Person", FormMethod.Post, new { id = "SaveFormId" }))
 			{
 		@Html.AntiForgeryToken()
 		@Html.ValidationSummary(true)
@@ -49,8 +49,11 @@
 				</div>
 			</div>
 
-			<p>
+			@*<p>
 				<a id="SavePerson" onclick="SavewCreatePerson()" data-dismiss="modal">Save</a>
+			</p>*@
+			<p>
+				<input type="submit" value="Create" />
 			</p>
 		</fieldset>
 			}

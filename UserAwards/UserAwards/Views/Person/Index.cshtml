@@ -17,6 +17,27 @@
 			}
 		});
 	}
+
+	function ConfirmChange() {
+		$.ajax({
+			url: '@Url.Action("ConfirmListCreate")',
+			mrthod: "GET",
+			success: function(data) {
+				$('#personList').html(data);
+			}
+		});
+	};
+
+	function RevertChange() {
+		$.ajax({
+			url: '@Url.Action("RevertListCreate")',
+			mrthod: "GET",
+			success: function(data) {
+				$('#personList').html(data);
+			}
+		});
+	};
+
 </script>
 
 <script type="text/javascript">
@@ -62,6 +83,11 @@
 <p>
 	@Html.ActionLink("Create New", "Create")
 </p>
+
+<div>
+	<button id="Confirm" onclick=ConfirmChange()>Confirm change</button>
+	<button id="Revert" onclick=RevertChange()>Revert change</button>
+</div>
 
 <div id="personList">
 	@{ Html.RenderPartial("_IndexListPartial"); }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,17 @@ namespace UserAwards.Controllers
 		
 		public ActionResult Index()
 		{
-			var model = PersonHelper.PersonModelList;
+			var fakeListPersonModel = (List<PersonModel>)Session["fakeListPersonModel"];
+
+
+			var model = new List<PersonModel>();
+			model.AddRange(PersonHelper.PersonModelList);
+
+			if (fakeListPersonModel != null)
+			{
+				model.AddRange(fakeListPersonModel);
+			}
+			
 			if (Request != null && Request.IsAjaxRequest())
 			{
 				return PartialView("_IndexListPartial", model);
@@ -74,7 +85,6 @@ namespace UserAwards.Controllers
 			return File(fs, "text/csv");
 		}
 
-	
 		public ActionResult SaveNewPerson(PersonModel personModel)
 		{
 			Create(personModel);
@@ -91,31 +101,42 @@ namespace UserAwards.Controllers
 		[HttpPost]
 		public ActionResult Create(PersonModel personModel, HttpPostedFileBase image = null)
 		{
-			if (!ModelState.IsValid)
+			if (image != null)
 			{
-				if (Request.IsAjaxRequest())
-				{
-					return PartialView("_CreateNewPersonPartial");
-				}
-				return View();
+				personModel.ImageMimeType = image.ContentType;
+				personModel.ImageData = new byte[image.ContentLength];
+				image.InputStream.Read(personModel.ImageData, 0, image.ContentLength);
 			}
 
-			try
-			{
-				if (image != null)
-				{
-					personModel.ImageMimeType = image.ContentType;
-					personModel.ImageData = new byte[image.ContentLength];
-					image.InputStream.Read(personModel.ImageData, 0, image.ContentLength);
-				}
+			var fakeListPersonModel = (List<PersonModel>)(Session["fakeListPersonModel"]) ?? new List<PersonModel>();
+			fakeListPersonModel.Add(personModel);
 
-				PersonHelper.CreateEntity(personModel);
-				return RedirectToAction("Index");
-			}
-			catch
+			//todo
+			Session["fakeListPersonModel"] = fakeListPersonModel;
+
+			return RedirectToAction("Index");
+		}
+
+		public ActionResult ConfirmListCreate()
+		{
+			var fakeListPersonModel = (List<PersonModel>)Session["fakeListPersonModel"];
+			if (fakeListPersonModel != null)
 			{
-				return View();
+				foreach (var personModel in fakeListPersonModel)
+				{
+					PersonHelper.CreateEntity(personModel);
+				}
 			}
+			Session["fakeListPersonModel"] = null;
+			var model = PersonHelper.PersonModelList;
+			return PartialView("_IndexListPartial", model);
+		}
+		
+		public ActionResult RevertListCreate()
+		{
+			Session["fakeListPersonModel"] = null;
+			var model = PersonHelper.PersonModelList;
+			return PartialView("_IndexListPartial", model);
 		}
 
 		public ActionResult Edit(Guid id)

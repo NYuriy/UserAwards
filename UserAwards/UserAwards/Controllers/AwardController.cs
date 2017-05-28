@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using UserAwards.Models;
 using UserAwards.Models.Helpers;
 
@@ -51,6 +52,7 @@ namespace UserAwards.Controllers
 			return View("Create");
 		}
 
+		[OutputCache(Duration = 30, Location = OutputCacheLocation.Downstream)]
 		[Authorize(Roles = "Admin, User")]
 		public ActionResult Index()
 		{
