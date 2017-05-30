@@ -129,14 +129,17 @@ namespace UserAwards.Controllers
 		{
 			try
 			{
-				if (image != null)
+					if (image != null)
 				{
 					model.ImageMimeType = image.ContentType;
 					model.ImageData = new byte[image.ContentLength];
 					image.InputStream.Read(model.ImageData, 0, image.ContentLength);
 				}
 
-				AwardHelper.UpdateEntity(model);
+				if (ModelState.IsValid)
+				{
+					AwardHelper.UpdateEntity(model);
+				}
 				return RedirectToAction("Index");
 			}
 			catch

@@ -141,6 +141,10 @@ namespace UserAwards.Controllers
 
 		public ActionResult Edit(Guid id)
 		{
+			if (PersonHelper.PersonModelList.All(_ => _.Id != id))
+			{
+				return HttpNotFound();
+			}
 			return View(PersonHelper.GetPersonModelEntity(id));
 		}
 

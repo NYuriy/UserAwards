@@ -120,4 +120,8 @@ D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\ko\System.Spatial.resourc
 D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\ru\System.Spatial.resources.dll
 D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\zh-Hans\System.Spatial.resources.dll
 D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\zh-Hant\System.Spatial.resources.dll
-D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\obj\Debug\UserAwards.csprojResolveAssemblyReference.cache
+D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\Castle.Core.dll
+D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\Moq.dll
+D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\Castle.Core.xml
+D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\Moq.xml
+D:\Mentoring\Task\UserAwards\UserAwards\UserAwards\bin\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
